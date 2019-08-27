@@ -11,10 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PasteController@index');
+Route::get('/{id}', 'PasteController@show');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
