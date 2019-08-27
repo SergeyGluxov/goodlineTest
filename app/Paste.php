@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Paste extends Model
 {
+    public $timestamps = false;
     public function user()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
 }

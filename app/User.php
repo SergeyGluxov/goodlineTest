@@ -23,6 +23,6 @@ class User extends Authenticatable
     ];
     public function pastes()
     {
-        return $this->belongsTo(Paste::class);
+        return $this->hasMany(Paste::class);
     }
 }

@@ -1,17 +1,11 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-Route::get('/', 'PasteController@index');
-Route::get('/{id}', 'PasteController@show');
-
 Auth::routes();
+
+//Для всех пользователей
+Route::get('/', 'PasteController@index');
+Route::post('/','PasteController@store')->name('store_paste');
+
+//Для авторизованного пользователя
+Route::get('/{id}', 'PasteController@show')->name('show_paste');
+
