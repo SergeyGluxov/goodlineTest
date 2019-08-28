@@ -1,5 +1,9 @@
 <div class="container">
     <label for="card">Ваши пасты:</label>
+    @if(count($user_paste)==null)
+        <span class=" float-right">Пусто</span>
+    @endif
+
     <div class="card" id="card" style="width: 15rem;">
         <ul class="list-group list-group-flush">
             @foreach($user_paste as $paste)
