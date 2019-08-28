@@ -22,17 +22,19 @@
                                         id="exposure"
                                         required="">
                                     <option value="0">Публичная</option>
-                                    <option value="1">Частная</option>
+                                    <option value="1">Только по ссылке</option>
                                 </select>
                             </div>
                             <div class="col-md-12 mb-3">
-                                <label for="expiration">Сколько хранить:</label>
-                                <select @change.capture="onChange($event)" class="custom-select" name="expiration"
-                                        id="expiration"
-                                        required="">
-                                    <option>1 месяц</option>
-                                    <option>1 год</option>
-                                    <option>Всегда</option>
+                                <label for="time-live">Сколько хранить:</label>
+                                <select  class="custom-select" name="time-live" id="time-live" required="">
+                                    <option value="0">10 мин</option>
+                                    <option value="1">1 час</option>
+                                    <option value="2">3 часа</option>
+                                    <option value="3">1 день</option>
+                                    <option value="4">1 неделя</option>
+                                    <option value="5">1 месяц</option>
+                                    <option value="6" selected>без ограничения</option>
                                 </select>
                             </div>
                             <div class="col-md-5 float-left">

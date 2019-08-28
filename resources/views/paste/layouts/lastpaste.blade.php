@@ -3,7 +3,12 @@
     <div class="card" id="card" style="width: 15rem;">
         <ul class="list-group list-group-flush">
             @foreach($public_paste as $paste)
-                <li class="list-group-item"><a href="{{$paste->id}}">{{$paste->title}}</a></li>
+                <li class="list-group-item">
+                    <a href="{{$paste->slug()}}">
+                        {{$paste->title}}
+                    </a>
+                    <span href="#" class="float-right badge badge-light">{{$paste->create_at}}</span>
+                </li>
             @endforeach
         </ul>
     </div>

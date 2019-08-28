@@ -15,7 +15,7 @@ class CreatePastesTable extends Migration
     {
         Schema::create('pastes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->nullable()->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->boolean('visibility');//0-public, 1-private
             $table->string('title');

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App;
+use App\Helpers\HelpersPaste;
 use App\Paste;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PasteController extends Controller
 {
@@ -15,10 +17,13 @@ class PasteController extends Controller
     {
         if (Auth::check()) {
             $user = User::find(Auth::user()->getAuthIdentifier());
-            $user_paste = $user->pastes;
+            $user_paste = $user->pastes
+                ->where('hide_at', '>=', Carbon::now()->format('Y-m-d H:i:s'))
+                ->reverse();
         }
         /**Получение последних 10 публичных паст**/
         $public_paste = Paste::where('visibility', 0)
+            ->where('hide_at', '>=', Carbon::now()->format('Y-m-d H:i:s'))
             ->take(10)
             ->get()
             ->reverse();
@@ -34,34 +39,30 @@ class PasteController extends Controller
     {
         /**TODO: Разграничить пасту от пользователя и от гостя**/
         $paste = new Paste();
-        $paste->user_id     = auth('web')->user()->getAuthIdentifier();
-        $paste->visibility  = $request->get('visibility');
-        $paste->title       = $request->get('title');
-        $paste->body        = $request->get('body');
-        $paste->create_at   = Carbon::now();
-        $paste->hide_at     = Carbon::now();
+        //Если пользователь зарегистрирован, то передаем в paste его id
+        if (Auth::check()) {
+            $paste->user_id = auth('web')->user()->getAuthIdentifier();
+        }
+        $paste->visibility = $request->get('visibility');
+        $paste->title = $request->get('title');
+        $paste->body = $request->get('body');
+        $paste->create_at = Carbon::now();
+        $paste->hide_at = HelpersPaste::addHours($request->get('time-live'));
         $paste->save();
-        return redirect(url('/', $paste->getQueueableId()));
+        return redirect(url('/', $paste->slug()));
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        $show_paste = Paste::find($id);
-        //Паста не найдена
+        $show_paste = Paste::findBySlug($slug);
         if ($show_paste == null) {
             abort(404);
-        }
-        //Если пользователь авторизован
-        if (Auth::check() && $show_paste->user_id == Auth::id()) {
+        } elseif (Carbon::parse($show_paste->hide_at) <= Carbon::now()) {
+            abort(404);
+        } else
             return view('paste/show', compact('show_paste'));
-        } else {
-            //Проверка доступности к пасте
-            if ($show_paste->visibility == 1) {
-                abort('403');
-            }
-        }
-        return view('paste/show', compact('show_paste'));
     }
+
 
     public function edit($id)
     {
