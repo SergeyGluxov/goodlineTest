@@ -9,3 +9,4 @@ Route::post('/','PasteController@store')->name('store_paste');
 //Для авторизованного пользователя
 Route::get('/{id}', 'PasteController@show')->name('show_paste');
 
+
