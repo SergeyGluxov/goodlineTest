@@ -2,31 +2,29 @@
 
 namespace App\Providers;
 
-use App\Paste;
-use App\User;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-class AppServiceProvider extends ServiceProvider
+
+class ViewServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Register services.
      *
      * @return void
      */
     public function register()
     {
-
+        //
     }
 
     /**
-     * Bootstrap any application services.
+     * Bootstrap services.
      *
      * @return void
      */
     public function boot()
     {
-
+        View::composer('*', 'App\Http\View\Composers\PublicPasteComposer');
+        View::composer('*', 'App\Http\View\Composers\UserAuthPasteComposer');
     }
 }

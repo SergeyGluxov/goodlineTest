@@ -2,7 +2,7 @@
     <label for="card">Последние публичные пасты:</label>
     <div class="card" id="card" style="width: 15rem;">
         <ul class="list-group list-group-flush">
-            @foreach($share_paste as $paste)
+            @foreach($public_paste as $paste)
                 <li class="list-group-item">
                     <a href="{{$paste->slug()}}">
                         {{$paste->title}}

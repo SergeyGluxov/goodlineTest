@@ -6,7 +6,8 @@
                 @include('paste.layouts.show_paste')
             </div>
             <div class="col-md-2">
-                @include('paste.layouts.lastpaste')
+                @include('paste.layouts.lastpaste')<br>
+                @include('paste.layouts.private_paste')
             </div>
         </div>
     </div>
