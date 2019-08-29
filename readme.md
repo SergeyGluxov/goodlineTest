@@ -26,7 +26,7 @@ $ cd goodlineTest
 ~/goodlineTest $php artisan key:generate
 ```
 
-5. Измените имя файла .env.example на .env и измените содержимое, предварительно создав БД для:
+5. Измените имя файла .env.example на .env и измените содержимое, предварительно создав БД для проекта:
 ```
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
