@@ -2,6 +2,7 @@
 
 //Авторизация
 Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('login/github', 'Auth\ULoginController@redirectToProvider');
 Route::get('login/github/callback', 'Auth\ULoginController@handleProviderCallback');
 

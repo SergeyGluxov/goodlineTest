@@ -23,6 +23,9 @@
                                         required="">
                                     <option value="0">Публичная</option>
                                     <option value="1">Только по ссылке</option>
+                                    @auth
+                                    <option value="2">Приватная</option>
+                                        @endauth
                                 </select>
                             </div>
                             <div class="col-md-6 mb-3">

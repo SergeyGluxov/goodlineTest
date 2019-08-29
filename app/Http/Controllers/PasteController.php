@@ -15,24 +15,7 @@ class PasteController extends Controller
 {
     public function index()
     {
-        if (Auth::check()) {
-            $user = User::find(Auth::user()->getAuthIdentifier());
-            $user_paste = $user->pastes
-                ->where('hide_at', '>=', Carbon::now()->format('Y-m-d H:i:s'))
-                ->reverse();
-        }
-        /**Получение последних 10 публичных паст**/
-        $public_paste = Paste::where('visibility', 0)
-            ->where('hide_at', '>=', Carbon::now()->format('Y-m-d H:i:s'))
-            ->take(10)
-            ->get()
-            ->reverse();
-        return view('paste/create', compact('public_paste', 'user_paste'));
-    }
-
-    public function create()
-    {
-
+        return view('paste/create');
     }
 
     public function store(Request $request)
@@ -56,27 +39,26 @@ class PasteController extends Controller
     public function show($slug)
     {
         $show_paste = Paste::findBySlug($slug);
+        //Если паста не найдена
         if ($show_paste == null) {
             abort(404);
-        } elseif (Carbon::parse($show_paste->hide_at) <= Carbon::now()) {
+        }
+        if($show_paste->visibility==2)
+        {
+            if(Auth::id()!=$show_paste->user_id)
+            {
+                abort(401);
+            }
+            else{
+                return view('paste/show', compact('show_paste'));
+            }
+        }
+        //Если срок доступности пасты истек
+        elseif (Carbon::parse($show_paste->hide_at) <= Carbon::now()) {
             abort(404);
-        } else
+        }
+        else
             return view('paste/show', compact('show_paste'));
     }
 
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
-    }
 }
