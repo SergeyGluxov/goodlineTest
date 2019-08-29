@@ -9,6 +9,7 @@ Route::get('login/github/callback', 'Auth\ULoginController@handleProviderCallbac
 //Для всех пользователей
 Route::get('/', 'PasteController@index');
 Route::post('/','PasteController@store')->name('store_paste');
+Route::get('/search','PasteController@search')->name('search');
 
 //Для авторизованного пользователя
 Route::get('/{id}', 'PasteController@show')->name('show_paste');

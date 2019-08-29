@@ -20,9 +20,8 @@ class PasteController extends Controller
 
     public function store(Request $request)
     {
-        /**TODO: Разграничить пасту от пользователя и от гостя**/
         $paste = new Paste();
-        //Если пользователь зарегистрирован, то передаем в paste его id
+        //Если пользователь авторизован, то передаем в paste его id
         if (Auth::check()) {
             $paste->user_id = auth('web')->user()->getAuthIdentifier();
         }
@@ -43,22 +42,35 @@ class PasteController extends Controller
         if ($show_paste == null) {
             abort(404);
         }
-        if($show_paste->visibility==2)
-        {
-            if(Auth::id()!=$show_paste->user_id)
-            {
+        if ($show_paste->visibility == 2) {
+            if (Auth::id() == $show_paste->user_id) {
+                return view('paste/show', compact('show_paste'));
+            } else {
                 abort(401);
             }
-            else{
-                return view('paste/show', compact('show_paste'));
-            }
-        }
-        //Если срок доступности пасты истек
+        } //Если срок доступности пасты истек
         elseif (Carbon::parse($show_paste->hide_at) <= Carbon::now()) {
             abort(404);
-        }
-        else
+        } else
             return view('paste/show', compact('show_paste'));
     }
 
+    /**Поиск среди публичных паст(доступно всем)
+     * visibility 0 - публичные
+     * visibility 1 - только по ссылке
+     * visibility 2 - приватные
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search(Request $request)
+    {
+        $search_paste = Paste::where('visibility', 0)
+            ->where('hide_at', '>=', Carbon::now()->format('Y-m-d H:i:s'))
+            ->where(function ($q) use ($request) {
+                $q->where('title', 'LIKE', "%$request->search_paste%")
+                    ->orWhere('body', 'LIKE', "%$request->search_paste%");
+            })
+            ->get();
+        return view('paste/search', compact('search_paste'));
+    }
 }
