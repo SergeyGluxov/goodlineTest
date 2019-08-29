@@ -1,12 +1,9 @@
 <div class="form-group purple-border">
-    <link rel="stylesheet"
-          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/color-brewer.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
     @if($show_paste != null)
-        <label for="body-paste">Название пасты: {{$show_paste->title}}</label>
+        <label for="body-paste">Название пасты: {{$show_paste->title}} </label>
+        <span href="#" class="float-right badge badge-success">{{$show_paste->lang}}</span>
         <pre>
-            <code lang="language-html">
+            <code lang="{{$show_paste->lang}}">
                     {{$show_paste->body}}
             </code>
         </pre>

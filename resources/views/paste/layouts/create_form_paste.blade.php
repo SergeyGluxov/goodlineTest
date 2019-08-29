@@ -25,7 +25,17 @@
                                     <option value="1">Только по ссылке</option>
                                 </select>
                             </div>
-                            <div class="col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
+                                <label for="_lang">Язык:</label>
+                                <select class="custom-select" name="_lang"
+                                        id="_lang">
+                                    <option></option>
+                                    <option value="html">HTML</option>
+                                    <option value="js">JS</option>
+                                    <option value="php">PHP</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
                                 <label for="time-live">Сколько хранить:</label>
                                 <select  class="custom-select" name="time-live" id="time-live" required="">
                                     <option value="0">10 мин</option>

@@ -20,7 +20,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!--Подсветка синтаксиса-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js">
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/color-brewer.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
     <div id="app">

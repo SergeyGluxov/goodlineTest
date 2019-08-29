@@ -48,6 +48,7 @@ class PasteController extends Controller
         $paste->body = $request->get('body');
         $paste->create_at = Carbon::now();
         $paste->hide_at = HelpersPaste::addHours($request->get('time-live'));
+        $paste->lang = $request->get('_lang');
         $paste->save();
         return redirect(url('/', $paste->slug()));
     }
