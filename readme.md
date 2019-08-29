@@ -53,3 +53,5 @@ DB_PASSWORD=secret
 
 - GET /
 - POST /
+##### Пользователь
+- GET /home
