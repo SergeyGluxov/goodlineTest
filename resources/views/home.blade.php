@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        @if(count($user_auth_paste)!=null)
+        @if(count($paste_paginate)!=null)
             <table class="table">
                 <thead>
                 <tr>
@@ -12,7 +12,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($user_auth_paste as $paste)
+                @foreach($paste_paginate as $paste)
                     <tr>
                         <th scope="row">{{$loop->index+1}}</th>
                         <td><a href="{{$paste->slug()}}">{{$paste->title}}</a></td>
@@ -22,6 +22,7 @@
                 @endforeach
                 </tbody>
             </table>
+            {{$paste_paginate->links()}}
             @else
                 Паст не найдено!
         @endif
