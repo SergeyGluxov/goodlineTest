@@ -6,14 +6,6 @@ use Carbon\Carbon;
 
 class HelpersPaste
 {
-//Проверка, можно ли просмотреть пасту
-    public static function check_live($paste)
-    {
-        if (Carbon::parse($paste->hide_at) <= Carbon::now()) {
-            return true;
-        }
-        return false;
-    }
 
 //Функция выбора времени доступности пасты
     public static function addHours($option)
